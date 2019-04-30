@@ -1,7 +1,10 @@
 # Operating System (운영체제)
 
-- [프로세스](#프로세스(The Process))
+- [프로세스](#프로세스(The-Process))
 	- 프로세스 상태
+    - PCB
+- [스레드](#스레드(Threads))
+- [스케줄러](#스케줄러(Schedulers))
 
 
 <hr>
@@ -34,7 +37,7 @@
 어느 한 순간에 하나의 processor 상에서는 오직 하나의 프로세스만이 실행된다.  
 
 
-## PCB(프로세스 제어 블록)  d
+## PCB(프로세스 제어 블록) 
 
 프로세스는 PCB으로 운영체제에 의해 표현이된다.  
 <img width="174" alt="image" src="https://user-images.githubusercontent.com/33486820/56947282-a5dc6a00-6b67-11e9-9af1-fc74ce0003f6.png">  
@@ -51,7 +54,7 @@
 - 입출력 상태 정보  
   
   
-## 스레드 (Threads)  
+## 스레드(Threads)  
   
 스레드는 프로세스의 실행단위 이다. 프로세스가 하나의 실행 스레드를 실행하는 프로그램이다.
 한 프로세스가 여러 실행 스레드를 가질 수 있도록 하여 한순간에 하나 이상의 일을 실행할 수 있게 한다.  
