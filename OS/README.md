@@ -4,7 +4,7 @@
 	- 프로세스 상태
     - PCB
 - [스레드](#스레드(Threads))
-- [스케줄러](#스케줄러(Schedulers)
+- [스케줄러](#스케줄러(Schedulers))
 
 
 <hr>
