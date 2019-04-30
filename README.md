@@ -4,6 +4,6 @@
 
 - 알고리즘
 - 자료구조
-- 운영체제
+- [운영체제](https://github.com/gaki2745/GAKI-CS-Study/tree/master/OS)
 - 데이터베이스
 - 디자인 패턴
