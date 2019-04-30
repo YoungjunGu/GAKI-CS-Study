@@ -4,7 +4,7 @@
 	- 프로세스 상태
     - PCB
 - [스레드](#스레드(Threads))
-- [스케줄러](#스케줄러(Schedulers))
+- [스케줄러](#스케줄러(Schedulers)
 
 
 <hr>
@@ -12,8 +12,11 @@
 ## 프로세스(The Process)  
 
 프로세스란 실행 중인 프로그램이다. 
-<img width="294" alt="image" src="https://user-images.githubusercontent.com/33486820/56946789-1f735880-6b66-11e9-8eec-76c1fbe165e6.png">  
 프로세스는 텍스트 섹션으로 알려진 프로그램 코드 이상이다. 
+
+<img width="294" alt="image" src="https://user-images.githubusercontent.com/33486820/56946789-1f735880-6b66-11e9-8eec-76c1fbe165e6.png"> 
+
+
 - 스택: 복귀주소와 로컬 변수 와 같은 임시적인 자료를 가진다
 - 데이터 섹션: 전역변수 수록
 - 힙: 실행정에 동적으로 할당 되는 메모리인 힙  
