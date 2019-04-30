@@ -12,7 +12,7 @@
 - [프로세스간 통신](#프로세스간-통신(Interprocess-Communication))
 	- 공유메모리
     - 메시지전달
-- [RPC](#원격 프로시저-호출(Remote-Procedure-Calls,-RPC))
+- [RPC](#원격-프로시저-호출(Remote-Procedure-Calls,-RPC))
 
 </br>
 <hr>
