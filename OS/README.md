@@ -2,8 +2,6 @@
 
 이 글은 [JaeYeopHan/OS](https://github.com/JaeYeopHan/Interview_Question_for_Beginner/tree/master/OS) 글과 [Operating System Concept/SILBERSCHATZ](https://m.search.naver.com/search.naver?sm=mtp_hty.top&where=m&query=Operating+System#api=%3F_lp_type%3Dcm%26col_prs%3Dcsa%26format%3Dtext%26nqx_theme%3D%257B%2B%2522theme%2522%253A%257B%2522main%2522%253A%257B%2522name%2522%253A%2522book_info%2522%252C%2522os%2522%253A7218891%252C%2522pkid%2522%253A20000%257D%257D%2B%257D%26query%3DOperating%2BSystem%26sm%3Digr_brg%26tab%3Dinfo%26tab_prs%3Dcsa%26where%3Dbridge&_lp_type=cm)를 참고하여 작성하였음을 밝힙니다.
 
-</br>
-
 <hr>
 
 ## 목차
@@ -353,9 +351,8 @@ RPC의 경우 네트워크 오류 때문에 실패하고 메시지가 중복되�
 
 ## CPU 스케줄러
 
-</br>
-
 스케줄링의 대상은 **Ready Queue** 에있는 프로세스 들이다. 
+
 </br>
 
 ### FCFS(First-Come, First-Served Scheduling)- 선입 선처리 스케줄링
@@ -365,8 +362,6 @@ RPC의 경우 네트워크 오류 때문에 실패하고 메시지가 중복되�
 - 먼저 온 작업을 먼저 처리(서비스) 해주는 방식, 
 - 비선점형(Non-Preemptive) 스케줄링
 	- 	일단 CPU를 잡으면 CPU burst가 완료될 때까지 CPU를 반환하지 않는다. 할			당되었던 CPU가 반환될때만 스케줄링이 이루어 진다.
-
-</br>
 
 #### 문제점
 
@@ -503,6 +498,57 @@ Kernel level 에서의 응답은 Signal 이나 Thread 기반 Callback 을 통해
 
 </br>
 
+## 프로세스 동기화
+
+### Critical Section(임계영역)  
+
+멀티 스레딩의 문제점에서 볼 수 있듯이, 동일한 자원을 동시에 접근하는 작업(e.g.공유하는 변수 사용, 동일 파일을 사용하는 등)을 실행하는 코드 영역을 Critical Section이라고 한다.  
+
+</br>
+
+### Critical Section Problem(임계영역문제)  
+
+프로세스들이 Critical Section을 함께 사용할 수 있는 프로토콜을 설계하는 것이다.  
+#### 임계 영역문제에 대한 해결안 3가지 요구조건  
+
+- 상호배제(Mutial Exclusion)
+	- 프로세스 P가 자기의 임계 영역에서 실행된다면 다른 프로세스들은 그들 자신의 임계영역에서 실행 될 수 없다. 
+- 진행(Progress)
+	- Critical Section 에서 실행중인 프로세스가 없고, 별도의 동작이 없는 프로세스들만 Critical Section 진입 후보로서 참여 될 수 있다. 이 선택은 무기한 연기 될 수 없다. 
+- 한정된 대기(Bounded Waiting)
+	- 프로세스가 자기의 임계영역에 진입하려는 요청을 한 후부터 그 요청이 허용될 때까지 다른 프로세스들이 자신의 임계 영역에 진입 하도록 허용되는 횟수는 한계 또는 제한이 있어야 한다. 
+    
+    
+#### 선점형(Preemptive) vs 비선점형(Non-Preemptive)  
+
+운영체제 내에서 임계영역을 다루기 위해서 두가지 일반적인 접근 방법이다.  
+
+- 선점형 커널
+	- 프로세스가 커널모드에서 실행되는 동안 선점되는 것을 허용한다.
+    - 공유되는 커널 자료구조에서 경쟁 조건이 발생하지 않는다는 것을 보장하도록 설계 필요
+    - 실시간 프로세스가 현캐 커널에서 실행 중인 프로세스를 선점할 수 있기 떄문에 **실시간 프로그래밍**에 적당하다.
+
+</br>
+    
+- 비선점형 커널    
+	- 커널모드에서 실행되는 프로세스의 선점을 허용하지 않고 커널모드 프로스세는 커널을 빠져나갈 때까지 또는 봉쇄될 떄까지 또는 자발적으로 CPU의 제어를 양보할 때까지 계속 실행한다.
+    - 한 순간에 한 커널 안에서 실행 중인 프로세스가 하나 밖에 없기 떄문에 커널 자료구조에 대한 경쟁 조건을 염려할 필요 없다. 
+    
+</br>
+    
+### 해결책 
+
+
+#### Lock
+
+- 하드웨어 기반 해결책으로써, 동시에 공유 자원에 접근하는 것을 막기 위해 Critical Section에 진입하는 프로세스는 Lock을 획득하고 Critical Section을 빠져나올 때, Lock 을 방출함으로써 동시에 접근이 되지 않도록 한다.  
+
+##### 한계
+- 싱글프로세서 환경에서는 공유 변수가 변경되는 동안 인터럽트 발생을 허용하지 않음으로써 간단히 해결할 수 있다.
+- 멀티프로세서 환경에서는 시간적인 효율성 측면에서 적용할 수 없다.
+	- 인터럽트가 불능화 되었다는 메시지가 모든 프로세서에게 전달 되어야 하기 때문이다.
+     
+     
 
 
 
