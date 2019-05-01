@@ -1,5 +1,13 @@
 # Operating System (운영체제)
 
+이 글은 [JaeYeopHan/OS](https://github.com/JaeYeopHan/Interview_Question_for_Beginner/tree/master/OS) 글과 [Operating System Concept/SILBERSCHATZ](https://m.search.naver.com/search.naver?sm=mtp_hty.top&where=m&query=Operating+System#api=%3F_lp_type%3Dcm%26col_prs%3Dcsa%26format%3Dtext%26nqx_theme%3D%257B%2B%2522theme%2522%253A%257B%2522main%2522%253A%257B%2522name%2522%253A%2522book_info%2522%252C%2522os%2522%253A7218891%252C%2522pkid%2522%253A20000%257D%257D%2B%257D%26query%3DOperating%2BSystem%26sm%3Digr_brg%26tab%3Dinfo%26tab_prs%3Dcsa%26where%3Dbridge&_lp_type=cm)를 참고하여 작성하였음을 밝힙니다.
+
+</br>
+
+<hr>
+
+## 목차
+
 - [프로세스](#프로세스)
 	- 프로세스 상태
     - PCB
@@ -15,6 +23,8 @@
 	- 공유메모리
     - 메시지전달
 - [RPC](#원격-프로시저-호출)
+- [CPU 스케줄러](#CPU-스케줄러)
+- [동기 vs 비동기](#동기-vs-비동기)
 
 </br>
 <hr>
@@ -102,6 +112,8 @@ PC값은 스레드가 명령어의 어디까지 수행하였는지를 알수있�
 
 </br>
 
+<hr>
+
 ## 멀티 스레딩 프로그래밍
 
 #### 등장배경 
@@ -161,6 +173,8 @@ PC값은 스레드가 명령어의 어디까지 수행하였는지를 알수있�
 
 
 </br>
+
+<hr>
 
 ## 프로세스 스케줄링 
 
@@ -257,6 +271,8 @@ Suspended(stopped) : 외부적인 이유로 프로세스의 수행이 정지된 
 
 </br>
 
+<hr>
+
 ## 문맥 교환(Context Switch)
 
 </br>
@@ -333,6 +349,8 @@ RPC의 경우 네트워크 오류 때문에 실패하고 메시지가 중복되�
 
 </br>
 
+<hr>
+
 ## CPU 스케줄러
 
 </br>
@@ -407,6 +425,89 @@ RPC의 경우 네트워크 오류 때문에 실패하고 메시지가 중복되�
 
 - Aging
 	- 아무리 우선순위가 낮은 프로세스라도 오래 기다리면 운선순위를 높여주자
+    
+</br>
+
+### Round Robin
+
+#### 특징  
+
+- 현대적인 CPU 스케줄링 
+- 각 프로세스는 동일한 크기의 할당 시간(time quantum)을 갖게 된다.
+- 할당 시간이 지나면 프로세스는 선점당하고 ready queue의 제일 뒤에 가서 다시 줄을 선다.
+- Round Robin은 CPU 사용시간이 랜덤한 프로세스들이 섞여있을 경우에 효율적
+- Round Robin이 가능한 이유는 프로세스의 context를 저장할 수 있기 때문이다.  
+
+#### 장점  
+
+- Reponse time(응답시간)이 빨라진다
+	- n개의 프로세스가 ready queue에 있고 할당시간이 q(time quantum)인 경우 각 프로세스는 q단위로 CPU 시간의 1/n을 얻는다.즉, 어떤 프로세스도 (n-1)q time unit 이상 기다리지 않는다.
+- 프로세스가 기다리는 시가닝 CPU를 사용할 만큼 증가한다. 즉 공정한 스케줄링이라 할 수 있다.  
+
+#### 주의할 점  
+
+설정한 time quantum 이 너무 커지면 FCFS(선입 선처리) 와 같아진다. 또 너무 작아지면 스케줄링 알고리즘 목적에는 이상적이지만 잦은 context switch로 오버헤드가 발생한다. 그렇기 때문에 **적당한 time quantum을 설정 하는 것이 중요하다.**
+
+
+</br>
+
+<hr>
+
+## 동기(Sync) vs 비동기(Async)
+
+동기와 비동기를 구분하는 기준은 **작업 순서** 이다.  
+동기식 모델은 모든 작업들이 일련으 ㅣ순서를 따르며 그 순서에 맞게 동작한다. 즉 A,B,C순서대로 작업이 시작되었다면 A,B,C 순서로 작업이 끝나야 한다. 설령 여러 작업이 동시에 처리되고 있다고 해도, 작업이 처리되는 모델의 순서가 보장되면 이는 동기식 처리 모델이라고 할 수 있다.  
+
+> 주의) 동기처리 모델에서 작업의 순서가 보장된다는 점 뿐이다. 다음 처리를 기다리는다는 것과는 다르다. 
+
+동기식 처리 모델은 대부분의 프로세스 로직이고, 특히 Pipeline을 준수하는 Working Process에서 좋은 모델이다.  
+반면 비동기식 모델은 **작업의 순서가 보장되지 않는다.**  
+A,B,C순서로 작업이 시작되어도 A,B,C 순서로 작업이 끝난다고 보장할 수 없다.  
+비동기식 처리 모델이 이득을 보는 경우는 각 작업이 분리될 수 있으며, Latency가 큰 경우이다. 예를들어 각 클라이언트 또는 작업 별로 Latency가 발생하는 네트워크 처리나 File I/O등이 훌륭한 적용 예시이다.  
+
+## 블록킹(Blocking) vs 넌블로킹(Non-Blocking)  
+
+블로킹과 넌블로킹을 구분하는 기준은 **통지** 이다.  
+블로킹이란 말그대로 멈춤,대기(Wait)을 의미한다. 즉, 작업을 시작하고 **작업이 끝날때까지 대기하다가 즉석에서 완료 통지**를 받는다.  
+
+> 주의) 작업이 멈추는 동안 다른 작업이 끼어들수 있는지 없는지는 다른 얘기이다. 즉 동기방식과 차이를 두는것이 동기는 순서가 중요, 블로킹은 작업을 수행하는데 대기시간만 갖을 뿐이다.  
+
+넌블로킹이란 작업의 완료를 나중에 통지받는 개념이다. 작업의 시작 이 후 완료시 까지 대기하지 않고 완료시킨다. 즉 내부 동작에 무관하게 작업에 대한 완료를 처리받는걸 말한다. 
+효과적인 작업 상태의 처리를 위해 넌블로킹에서는 **성공, 실패, 일부성공(partial sccess)** 라는 3가지 패턴이 존재한다.
+
+</br>
+
+## System I/O 
+
+- Synchronous Blocking I/O : Application layer 의 계층이 Block을 일으키는 System Call을 호출하고, 이에 따라 User Layer와 Kernel Layer 간의 Context Switching 이 발생한다. 
+
+이 때, Application 은 CPU 를 사용하지 않고 Kernel 의 응답을 기다리게 된다.
+
+</br>
+
+- Synchronous Non-blocking I/O : Nonblock Kernel Systemcall 을 사용하기 때문에 더 향상된 것처럼 보이지만, 
+
+User Layer 가 Synchronous 이므로 응답을 기다리는 동안 Kernel 의 System Call을 Polling 하게 된다. 당연히 Context Switching 빈도수가 늘어나기 때문에 더 I/O에 지연이 발생하게 된다.
+
+</br>
+
+- Asynchronous Blocking I/O : User Layer의 I/O 가 Non-blocking 이고 Kernel 에서 알림이 블로킹 방식이다. Select System call 이 이 방식의 대표적이며 여러 I/O 를 한번에 수행할 수 있는 모델이다.
+
+</br>
+
+- Asynchronous Non-blocking I/O : Kernel I/O 의 개시와 알림 두 차례만 Context Switching 이 발생하고, Kernel 작업이 Non-block 이므로 select() 와 같은 멀티플렉싱 뿐 아니라 다른 프로세싱 자체가 가능하다. 
+
+Kernel level 에서의 응답은 Signal 이나 Thread 기반 Callback 을 통해 user level 로 마치 이벤트처럼 전달된다.
+
+[참고:jins-dev](https://jins-dev.tistory.com/entry/동기Synchronous-작업과-비동기Asynchronous-작업-그리고-블락Blocking-과-넌블락NonBlocking-의-개념)
+
+</br>
+
+
+
+
+
+
     
     
 
