@@ -115,7 +115,7 @@ temp->link = newNode;
 
 하지만 위의 경우 3번 조건을 위배하게 되고 우리는 Double Red 문제를 해결하기 위해 두가지 전략을 세워 RBT를 Balance하게 유지해야한다.  
 
-#### Restrucuring
+#### Restructuring
 
 ![image](https://user-images.githubusercontent.com/33486820/57152326-245a3580-6e0e-11e9-947a-b4548208b745.png)
 
