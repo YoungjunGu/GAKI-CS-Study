@@ -91,5 +91,34 @@ temp->link = newNode;
 - Terminal Node ( = leaf Node, 단말 노드) : 하위에 다른 노드가 연결되어 있지 않은 노드를 의미한다.
 - Internal Node (내부노드, 비단말 노드) : 단말 노드를 제외한 모든 노드로 루트 노드를 포함한다.
 
+## Red Black Tree
+
+- RBT(Red-Black Tree)는 BST를 기반으로 하는 트리형식의 자료구조이다.
+- SEarch, Insert, Delete에 `O(log n)`의 시간 복잡도가 소요된다.
+- 동일한 노드의 개수일 때, hight를 최소화 하여 시간 복잡도를 줄이는 것이 핵심 아이디어이다.
+- 동일한 노드의 개수일때 hight 가 최소가 되는 경우는 tree 가 complete binary tree인 경우이다.
+
+
+ 이진 트리에서 Inorder Traversal(중위순회)시에 오름차순으로 순회가 되는 구간이 존재 할경우 또는 그 구간이 상당이 길어지게 되면 BST의 경우 일렬로 길게 오른쪽으로 한 없이 길어지게 되는 트리의 모양을 하게 된다 그렇게 되면 최악의 경우는 O(hight) 높이 만큼의 시간복잡도를 가진다. 하지만 RBT의 경우는 **Balanced BST**이므로 균형을 이루면서 BST의 성질을 가진다.  
+이때 삽입 시에 삭제 시의 조건이 RBT를 Balanced 하게 유지하는 규칙이 몇가지 존재한다.
+
+#### 기존의 RBT 조건  
+
+1. Root Property: Black
+2. External Property: Black
+3. Internal Property: Red 노드의 자식은 Black(== **No Double Red** 빨간색 노드 연속으로 나올 수 없다.)
+4. Depth Property: 모든 leafNode에서 Black Depth는 같다(== 리프노드에서 로트노드까지 가는 경로에서 만나는 블랙노드의 개수는 같다)
+
+### RBT 삽입 
+
+- 새로 삽입 되는 노드는 반드시 Red색 이어야 한다.  
+
+하지만 위의 경우 3번 조건을 위배하게 되고 우리는 Double Red 문제를 해결하기 위해 두가지 전략을 세워 RBT를 Balance하게 유지해야한다.  
+
+#### Restrucuring
+
+![image](https://user-images.githubusercontent.com/33486820/57152178-b877cd00-6e0d-11e9-821e-186de294f154.png)
+
+
 
 
