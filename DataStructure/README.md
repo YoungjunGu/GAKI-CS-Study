@@ -117,7 +117,14 @@ temp->link = newNode;
 
 #### Restrucuring
 
-![image](https://user-images.githubusercontent.com/33486820/57152178-b877cd00-6e0d-11e9-821e-186de294f154.png)
+![image](https://user-images.githubusercontent.com/33486820/57152326-245a3580-6e0e-11e9-947a-b4548208b745.png)
+
+#### ReColoring
+
+![image](https://user-images.githubusercontent.com/33486820/57152820-849da700-6e0f-11e9-9492-3e586c9a4976.png)
+
+
+> 결론) 두 작업 모두 **O(log n)** 이 걸리게 된다.
 
 
 
