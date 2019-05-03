@@ -127,5 +127,38 @@ temp->link = newNode;
 > 결론) 두 작업 모두 **O(log n)** 이 걸리게 된다.
 
 
+### RBT 삭제
+
+삭제의 경우도 마찬가지로 BST의 특성을 유지하면서 해당 노드를 삭제한다. 삭제될 노드의 child의 개수에 따라 rotation 방법이 달리게된다.  
+
+- 삭제될 노드 Black: Black-Height가 1감소한 경로에 Black Node가 1개 추가되도록 rotation 하고 노드의 색깔을 조정한다.
+- 삭제될 노드 Red: Violation이 발생하지 않으므로 RBT가 그대로 유지된다.
+
+> 참고) Java Collection 에서 ArrayList도 내부적으로 RBT로 이루어져 있고, HashMap 에서의 Separate Chaining에서도 사용된다.
+
+</br>
+<hr>
+
+## Graph
+
+### 용어 정리
+
+#### Graph
+
+- Vertex와 Edge의 집합으로 이루어진 그래프
+- **유한**하고 **Nonempty**한 vertices 집합
+- `G = (V, E)`
+
+#### Undirected Graph
+
+- 방향성이 없는 그래프
+- (u, v), (v, u) 같다.
+
+#### Directed Graph
+
+- 방향성이 있는 그래프
+
+
+
 
 
