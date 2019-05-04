@@ -376,7 +376,93 @@ Graph의 각 vertex에 `vertexWeight`라는 변수 선언 후 초기에는 -1을
 |Heap|  o  |  x  |O(n log n)|
 |Quick|  o  |  x  |O(n log n)|
 |Radix|  x  |  o  |d x O(n)|
+|Counting|  x  |  o  |O(n + k)|
 
+
+#### In-Place
+
+입력리스트 내부에서 정렬이 이뤄 지는 경우를 가리킨다. 반대는 정렬 도중에 별도 저장공간을 필요로 하는 경우이다. Merge Sort의 경우 입력 리스트를 분할해 이를 정렬하고 다시 합치는 과정에서 분할된 리스트를 별도로 저장해 두어야한다. Counting Sort과 Radix Srot는 입력값의 빈도를 세어서 저장 해두는 변수. 결과리스트를 저장해 둘 변수가 필요하다.  
+
+</br>
+
+### Bubble Sort(버블 정렬)
+
+![image](https://user-images.githubusercontent.com/33486820/57178065-3be4fd00-6ea6-11e9-97c1-4c7df8313887.png)
+
+```c
+void bubbleSort(int list[], int size) {
+  //배열에서 두개의 인자를 비교 하므로 size - 1회 반복한다.
+  for(int i = size - 1; i > 0; i--) {
+    for(int j = 0; j < i; j++){
+      if(list[j] < list[j+1])
+      	SWAP(list[j],list[j+1];
+    }
+  }
+}
+```
+
+- 장점
+	- 구현이 매우 간단하다.(직관적이다)
+- 단점
+	- 순서에 맞지 않는 요소를 인접한 요소와 무조건 교환한다.
+    - 최악의 경우 맨 왼쪽에 가장 큰값이 있는 경우 또는 내림차순인 경우 오른쪽으로 이동 할때 모든 배열의 요소들과 교환되어야 한다( O(n^2)인 이유)
+    - 자기자리를 찾았음에도 불구하고 이동 될 수 있다. 즉 불필요한 이동이 발생한다.
+- 일반적으로 자료의 교환 작업(SWAP)이 자료의 이동작업 보다 더 복잡하기 때문에 버블정렬은 거의 쓰이지 않는다.  
+
+</br>
+
+### Selection Sort(선택 정렬)
+
+![image](https://user-images.githubusercontent.com/33486820/57178356-aa778a00-6ea9-11e9-93bf-0db11a12413d.png)
+
+```c
+void selectionSort(int list[], int size) {
+ 
+  for(int i = 0; i < n - 1; i++) {
+    int minPosition = i;
+    
+    for(int j = i + 1; j < size; j++) {
+      if(list[j] < list[minPosition])
+        minPosition = j;
+    }
+    
+    if(i != minPosition)
+      SWAP(list[i], list[minPosition]);
+  }
+}
+```  
+
+- 장점
+	- 자료 이동 횟수가 미리 결정된다.
+- 단점 
+	- n^2 의 고정적인 정렬 속도가 한계다.
+    
+</br>    
+
+### Insertion Sort(삽입 정렬)
+
+```c
+void insertionSort(int list[], int size) {
+ 	for(int i = 2; i <= size; i++) {
+      int key = list[i];
+      insert(key, list, i - 1);
+    }
+}
+
+void insert(int key, int list[], int i) {
+  while(key < list[i]) {
+    list[i+1] = list[i];
+    i--;
+  }
+  list[i+1] = key;
+}
+
+```
+
+- key 기준 배열 좌측으로 비교를 한다
+	- `key < list[i]` 이면 오른 쪽으로 이동
+   	- 작으면 종료하고 그 자리에 key값 삽입 하고 종료한다.
+- `insert()`함수에서 while문에 `<=`를 붙이면 stable에서 unstable이 된다.
 
 
 
