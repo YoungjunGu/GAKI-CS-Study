@@ -308,7 +308,34 @@ void bfs(int start, vector<int> graph[], bool check[]){
 
 ### Kruskal's Alogorithm
 
+- edge weight 가 작은 vertex 끼리 우선 연결한다.
+- 매순간 **Cycle Check** 가 필수 적이다.
+	- Weighting Union을 사용하여 부모의 node가 같으면 Cycle 발생  
+    
+> Q) Weighting Union을 어떻게 적용시키지?
 
+Graph의 각 vertex에 `vertexWeight`라는 변수 선언 후 초기에는 -1을 부여하고 연결이 발생할때 이 변수의 값이 큰(절대값을 취했을때) 값을 연결 된 대상과 통일 시키면서 연결을 계속한다.이 때 변수의 값이 -1인 곳은 아직 아무런 연결이 되지 않았다는 의미로 생각하면된다. 
+
+
+![image](https://user-images.githubusercontent.com/33486820/57173517-0b806d00-6e6c-11e9-8026-9a2da908014d.png)
+
+
+- Time Complexity
+	- Edge 의 weight 를 기준으로 sorting - O(E log E)
+	- cycle 생성 여부를 검사하고 `vertexWeight` 를 통일 - O(E + V log V) => 전체 시간 복잡도 : O(E log E)
+
+</br>
+
+### Prims's Algorithm
+
+- 시작 vertex부터 시작해서 인접한 vertex와의 가장 작은 weight를 이어나가면서 MST생성
+- Cycle check가 필요가 없다.
+- 방문한곳은 재방문을 하지 않기 위해 `visited[]` 배열을 선언하여 매순간 check해야한다.
+
+![image](https://user-images.githubusercontent.com/33486820/57173546-7a5dc600-6e6c-11e9-9bd3-78bc2132896e.png)
+
+- Time Complexity
+	- 전체 시간 복잡도 : O(E log V)
 
 </br>
 
