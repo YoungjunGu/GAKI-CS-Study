@@ -390,7 +390,8 @@ Graph의 각 vertex에 `vertexWeight`라는 변수 선언 후 초기에는 -1을
 ![image](https://user-images.githubusercontent.com/33486820/57178065-3be4fd00-6ea6-11e9-97c1-4c7df8313887.png)
 
 ```c
-void bubbleSort(int list[], int size) {
+void bubbleSort(int list[], int size) 
+{
   //배열에서 두개의 인자를 비교 하므로 size - 1회 반복한다.
   for(int i = size - 1; i > 0; i--) {
     for(int j = 0; j < i; j++){
@@ -416,8 +417,8 @@ void bubbleSort(int list[], int size) {
 ![image](https://user-images.githubusercontent.com/33486820/57178356-aa778a00-6ea9-11e9-93bf-0db11a12413d.png)
 
 ```c
-void selectionSort(int list[], int size) {
- 
+void selectionSort(int list[], int size) 
+{
   for(int i = 0; i < n - 1; i++) {
     int minPosition = i;
     
@@ -442,14 +443,16 @@ void selectionSort(int list[], int size) {
 ### Insertion Sort(삽입 정렬)
 
 ```c
-void insertionSort(int list[], int size) {
+void insertionSort(int list[], int size) 
+{
  	for(int i = 2; i <= size; i++) {
       int key = list[i];
       insert(key, list, i - 1);
     }
 }
 
-void insert(int key, int list[], int i) {
+void insert(int key, int list[], int i) 
+{
   while(key < list[i]) {
     list[i+1] = list[i];
     i--;
@@ -463,6 +466,168 @@ void insert(int key, int list[], int i) {
 	- `key < list[i]` 이면 오른 쪽으로 이동
    	- 작으면 종료하고 그 자리에 key값 삽입 하고 종료한다.
 - `insert()`함수에서 while문에 `<=`를 붙이면 stable에서 unstable이 된다.
+
+### Quick Sort(퀵 정렬)
+
+![image](https://user-images.githubusercontent.com/33486820/57179070-9be2a000-6eb4-11e9-9144-db03ecccf96d.png)
+
+```c
+vod quickSort(int list[], int left, int right)
+{
+  int pivot,i,j;
+  
+  if( left < right) {
+    // 초기의 left = 0 ,rifht = list의 size - 1 이다.
+  	i = left;
+  	j = right;
+      // pivot은 우선 처음 값으로 잡겠다 하지만 문제가 발생하니 밑에서 설명하겠다.
+      pivot = list[left];
+      do {
+        // i : pivot 보다 큰 값 찾기 
+        do i++ while (list[i] < pivot);
+        // j : pivot 보드 작은 값 찾기
+        do j-- while (list[j] > pivot);
+        // i , j 값이서로 역전이 되지 않을때 두 자리의 값을 SWAP한다
+        // pivot을 기준으로 작은 값 왼쪽 큰 값은 오른쪽으로 배치하게 된다.
+        if(i < j)
+          SWAP(list[i], list[j]);
+      } while (i < j);
+      // 실제 분할 정복을 수행할 부분, pivot을 중앙에 배치하고 pivot 기분 반으로
+      // 나누어 다시 quickSort를 수행한다.
+      SWAP(list[left], list[j]);
+      quickSort(list, left, j - 1);
+      quickSort(list, j + 1, right);
+  }
+}
+```
+- 장점
+	- Quick Sort는 우선 O(nlogn)의 복잡도를 가지는 정렬 방법 중에 가장 빠르다
+	- 추가 메모리 공간을 필요하지 않는다(in-place)
+    
+#### QuickSort의 Worst Case( 최악의 경우 )
+
+퀵정렬의 유일한 문제점은 바로 **이미정렬이 되어있는 구간에서** 발생한다.  
+이 경우 불균형 분할이 발행하고 오히려 수행시간이 더 많이 걸리게 된다(O(n^2) 이 걸린다)  
+이 경우 해결 책은 **Pivot 의 설정** 이 중요하다.  
+위의 코드에서는 Pivot을 단순하게 맨 왼쪽 처음 인자로 정했는데 그렇게 하게되면 불필요한 분할이 많이 일어난다 그렇기 때문에 Pivot을 중간값으로 설정하거나 random하게 설정을 하게 되면 이러한 불균형 분할을 조금이나마 완화 할 수 있거나 피하게 된다.  
+
+</br>
+
+### Sorting에 관하여
+
+Sorting 작업은 **O(n log n) 이하로 작아 질수 없다**
+
+</br>
+
+### Merge Sort
+
+- 하나의 list를 두개의 균등한 크기로 분할하고 분할된 부분 리스트를 정렬한다음 , 두개의 정렬된 부분 리스트를 합하여 전체가 정렬된 리스트가 되게 하는 방법이다. 
+- merge sort의 단계
+	- 분할(Divide): 입력 배열을 같은 크기의 2개의 subList로 분할 한다.
+    - 정복(Conquer): subList를 정렬한다. 부분 배열의 크기가 충분히 작지 않으면 순환 호출을 이용하여 다시 분할 정복 방법을 적용한다.
+    - 결합(Combine): 정렬된 subList를 하나의 list에 merge 한다.
+
+<img width="704" alt="image" src="https://user-images.githubusercontent.com/33486820/57180714-5dee7780-6ec6-11e9-9d23-a996c2bcff41.png">
+
+출처: https://gmlwjd9405.github.io/2018/05/08/algorithm-merge-sort.html
+
+```c
+void merge(int list[],int mergedList[], int left, int mid, int right) 
+{
+  int i, j ,k;
+  i = left;
+  j = mid + 1;
+  k = i;
+  
+  // 분할된 list를 순서대로 접근하면서 merge한다
+  // i , j 각각 분할된 두 list에 접근 할 인덱스 번호이다.
+  // 접근할 때 sparse matrix 다항식 덧셈 하듯이 인자를 비교하면서 mergedList에 넣는다.
+  while(i <= mid && j <= right) {
+    if(list[i] <= list[j])
+      mergedList[k++] = list[i++];
+    else
+      mergedList[k++] = list[j++];
+  }
+  
+  // 서로 남아있는 분할 리스트의 인자를 일괄로 mergedList 복사한다.
+  if(i > mid) {
+    // 오른쪽의 분할 List가 남아있을 경우
+    for(int s = j; s <= right; s++)
+      mergedList[k++] = list[s];
+  } else {
+    // 왼쪽의 분할 List가 남아있을 경우
+    for(int s = j; s <= mid; s++)
+      mergedList[k++] = list[s];
+  }
+  // 배열 mergedList[]의 리스트를 배열 list로 재복사한다.
+  
+  for(int s = left; s<= right; s++)
+    list[s] = mergedList[s];
+}
+
+void mergeSort(int list[], int mergedList[], int left, int right)
+{
+  int mid;
+  // merge Sort 재귀 종료 조건
+  if(left < right ) {
+    // 분할(Divide)
+    mid = (left + right) / 2;
+    // 앞쪽 부분 정복(Conquer)
+    mergeSort(list, mergedList, left, mid);
+    // 뒤쪽 부분 정복(Conquer)
+    mergedList(list, mergedList, mid + 1, right);
+    // 정렬된 2개의 subList를 결합(Combine)
+    merge(list, mergedList, left, mid, right);
+  }
+}
+```
+
+- 단점
+	- 레코드를 배열로 구성하면, 임시 배열이 필요하다(not In-place)
+    - 레코드들의 크기가 큰 경우에는 이동 횟수가 많아지므로 상당히 큰 시간적 낭비를 초래한다.
+- 장점
+	- 레코드를 연결리스트로 구성하면 , 링크 인덱스만 변경되므로 데이터의 이동은 무시할 수 있을 정도로 작아진다 즉 in-place한 성질로 구성할려면 **연결리스트**로 구현하면 된다.  
+    
+
+</br>
+
+### Heap Sort
+
+#### Heap
+
+- FBT(완전 이진 트리)의 일종으로 **Priority Queue**를 위하여 만들어진 자료구조이다.
+- 목적: 최대값, 최솟값을 O(1)에 추출 할 수 있게 하는 자료구조
+
+#### Max Heap or Min Heap
+
+1. 힙에 새로운 요소가 들어오면, 새로운 노드를 힙의 마지막 노드에 이어서 삽입하고
+2. 이어서 힙의 성질을 만족 시키면서 위치를 찾아 가면 된다.
+
+#### Max Heap 삽입 연산
+
+```c
+vod insertMaxHeap(int heap[], int item) 
+{
+  int i;
+  // 현재 힙사이즈 
+  // FBT 에서 배열로 접근했을때 부모 자식 관계를 Index로 찾을 수 있다.
+  i = ++heapSize;
+  // Bottom up으로 Heap Tree의 바닥에서 부터 위로 올라가면서 들어갈 위치를 찾는 작업
+  // i = 1 이면 heap Tree의 root Node, 부모 노드의 값이 자식 보다 작을때 부모를 밑으로 보내고 다시 상위의 부모를 판단 하기 위해 index i 값을 반으로 줄인다.
+  while((i != 1) && ( item > heap[i/2])) {
+    heap[i] = heap[i/2];
+    i /= 2;
+  }
+  // 들어갈 위치를 찾았으면 새로운 노드 정보 삽입
+  heap[i] = item;
+}
+```
+
+heap Sort는 전체 자료를 정렬하기 위함이 아니라 **가장 크거나 작은 값** 에 초점을 두어 빠르게 가져오고 싶을때 사용한다.  
+우선 그렇게 하기 위해 O(n log n) 이 소요되고 , 정렬 해놓은 상태에서 O(1) 만에 최댓갓, 최솟값을 추출 할 수 있다.  
+
+
+
 
 
 
