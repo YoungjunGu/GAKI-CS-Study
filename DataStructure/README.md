@@ -1,5 +1,8 @@
 # Data Structure(자료구조)
 
+- Array vs LinkedList
+
+
 </br>
 <hr>
 
@@ -357,11 +360,30 @@ Graph의 각 vertex에 `vertexWeight`라는 변수 선언 후 초기에는 -1을
 ![image](https://user-images.githubusercontent.com/33486820/57173418-a5dfb100-6e6a-11e9-8f73-faddc5696ff1.png)
 
 
+</br>
+<hr>
+
+## Sorting
+
+### 각 Sorting 알고리즘 비교
+
+|Strategy|in-place|stable|Time-Complexity|
+|:---|:---|:---|:---|
+|Bubble|  o  |  o  |O(n^2)|
+|Selection|  o  |  o  |O(n^2)|
+|Insertion|  o  |  o  |O(n^2)|
+|Merge|  x  |  o  |O(n log n)|
+|Heap|  o  |  x  |O(n log n)|
+|Quick|  o  |  x  |O(n log n)|
+|Radix|  x  |  o  |d x O(n)|
+
+
 
 
 
 
                                           
+
 
 
 
