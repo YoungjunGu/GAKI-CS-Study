@@ -5,5 +5,5 @@
 - 알고리즘
 - [자료구조](https://github.com/gaki2745/GAKI-CS-Study/tree/master/DataStructure)
 - [운영체제](https://github.com/gaki2745/GAKI-CS-Study/tree/master/OS)
-- 데이터베이스
+- [데이터베이스](https://github.com/gaki2745/GAKI-CS-Study/tree/master/Database)
 - 객체 지향 프로그래밍(Java, 디자인 패턴)
