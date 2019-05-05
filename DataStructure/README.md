@@ -1,10 +1,6 @@
 # Data Structure(자료구조)
 
-- Array vs LinkedList
-
-
 </br>
-<hr>
 
 ## Array vs LinkedList
 
