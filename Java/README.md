@@ -99,12 +99,16 @@
 ## String, StringBuilder,StringBuffer의 차이
 
 String객체는 **immutable**하다. 즉 한번 생성이 되면 변경이 불가능하다. 
+
+String을 + 연산을 사용하여 문자열에 변화를 주면 새로운 String 객체르 new로 만들어 새로운 메모리 공간을 만들고 기존의 문자열은 **가비지콜렉터에 의해 제거됭 하는 단점(언제 제거될지 모름)** 이 있다.  
 변경이 불가능 하기 때문에 어떤 연산을 하고자 할 경우 내부적으로 StringBuffer를 통해서 새로운 객체를 만들어 내기 때문에 성능면에서 좋지않다.반면에 StringBuffer의 경우 내부적으로 `char[]` 문자배열을 사용하기 때문에 내용의 추가 및 삭제가 자유롭다. 
 
 StringBuilder와 StringBuffer의 차이점은 멀티스레드 상태에서 동기화의 지원 여부가 다르다.   
 
 |StringBuilder|StringBuffer|
 |단일 스레드에서 안정성을 보장|스레드에 안전하게 설계되고 여러 스레드에서도 사용가능하다. 클래스의 static으로 선언한 문자열을 변경하거나, 싱글톤으로 선언된 클래스에서 선언된 문자일 때 이클래스를 사용해야한다.|
+
+==> 동기화 지원의 유무 StringBuilder는 멀티스레드 환경에서 `synchronzied` 키워드르 사용하여 동기화가 가능하지만 StringBuffer의 경우 동기화 지원 하지 않아 단일 스레드 환경에서 좋다.  
 
 > 참고 JDK 1.5 버전 이하에서는 String 과 StringBuilder의 성능차이가 존재하지만, 1.5버전 이후 부터는 String을 컴파일 할 때자동적으로 StringBuilder로 컴파일 하여 실행되므로 성능차이가 사라졌다.  
 
